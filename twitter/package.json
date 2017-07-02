@@ -1,0 +1,13 @@
+{
+  "name": "elasticsearchdemo-flightdata",
+  "version": "0.0.1",
+  "dependencies": {
+    "async": "",
+    "body-parser": "latest",
+    "cassandra-driver": "",
+    "fs": "",
+    "mysql": "",
+    "request": "",
+    "twitter": "^1.7.1"
+  }
+}
