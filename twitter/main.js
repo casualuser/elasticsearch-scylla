@@ -43,7 +43,6 @@ function search_twitter() {
       },
       body: message
     }
-  //  database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
     request(options, function(error, response, body) {
       if (error) {
         console.log(error);
