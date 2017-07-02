@@ -4,10 +4,12 @@
 The purpose of this demo is to show how to feed data into Elasticsearch and Scylla from Twitter via Fluent. The Twitter app will search for a specific Twitter hashtag and send data to Scylla directly and to Elasticsearch via Fluent. This demo will run Fluentd, Elastisearch, Kibana, and the Scylla.
 
 ### Scylla Architecture in this demo
-There will be a total of three Scylla nodes in a multi-datacenter configuration.
+Three Scylla nodes in a multi-datacenter configuration.
 
 ### Elasticsearch Architecture in this demo
-There will be a total of two Elasticsearch nodes (Master, data);
+Two Elasticsearch nodes (Master, data);
+
+![Pic](./a/diagram.png)
 
 ### Prerequisites
 
