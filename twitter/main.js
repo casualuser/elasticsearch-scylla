@@ -26,30 +26,32 @@ function search_twitter() {
     track: twitter_topic
   });
   stream.on('data', function(event) {
+    if (event.created_at && event.user.screen_name && event.text && event.id_str) {
+      var message = JSON.stringify({
+        'date': event.created_at,
+        'username': event.user.screen_name,
+        'tweet': event.text,
+        'url:': 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str,
+      });
 
-    var message = JSON.stringify({
-      'date': event.created_at,
-      'username': event.user.screen_name,
-      'tweet': event.text,
-      'url:': 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str,
-    });
-
-    var options = {
-      url: fluent_server + '/scylladb',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': message.length
-      },
-      body: message
-    }
-    request(options, function(error, response, body) {
-      if (error) {
-        console.log(error);
-      } else {
-        database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+      var options = {
+        url: fluent_server + '/scylladb',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': message.length
+        },
+        body: message
       }
-    });
+      request(options, function(error, response, body) {
+        if (error) {
+          console.log(error);
+        } else {
+          database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+        }
+      });
+    }
+
   });
 
   stream.on('error', function(error) {
