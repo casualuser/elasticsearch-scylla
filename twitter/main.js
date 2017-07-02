@@ -2,7 +2,6 @@ var Twitter = require('twitter');
 var request = require('request');
 var createKeyspace = require('./createKeyspace');
 var database = require('./createKeyspace');
-var clean = require('mysql');
 //Twitter Account Variables
 var consumer_key = process.env.consumer_key;
 var consumer_secret = process.env.consumer_secret;

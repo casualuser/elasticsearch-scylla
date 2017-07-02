@@ -6,7 +6,6 @@
     "body-parser": "latest",
     "cassandra-driver": "",
     "fs": "",
-    "mysql": "",
     "request": "",
     "twitter": "^1.7.1"
   }
