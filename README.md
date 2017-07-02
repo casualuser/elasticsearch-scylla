@@ -54,7 +54,7 @@ d2bfecf52f4d        elasticsearchscylla_scylla-node1           "/bin/sh -c 'bash
 ```
 
 
-### Accessing Kibana to viw the Twitter data
+### Accessing Kibana to view the Twitter data
 1. Goto https://0.0.0.0:5601 in your web browser
 2. Click the create button
 3. Start analyzing data
