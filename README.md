@@ -25,11 +25,9 @@ cd elasticsearch-scylla
 docker-compose build
 ```
 
-To use the Twitter app to mine data from Twitter, modify the twitter section of docker-compose.yml with
-your developer API credentials.
+To use the Twitter app to mine data from Twitter, modify the twitter section of docker-compose.yml with your developer API credentials and desired Twitter topic.
 
 ### Starting the containers
-
 ```
 docker-compose up -d
 ```
