@@ -32,7 +32,7 @@ your developer API credentials.
 docker-compose up -d
 ```
 
-Please wait about 2 minutes for the S3 Server and MySQL to start properly.
+Please wait about a minute for all the services to start properly.
 
 ### Check the status of the containers
 ```
