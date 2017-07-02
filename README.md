@@ -5,10 +5,10 @@ The purpose of this demo is to show how to feed data into Elasticsearch and Scyl
 
 ### Architecture
 
-##### Scylla Architecture in this demo
+##### Scylla Architecture
 Three Scylla nodes in a multi-datacenter configuration.
 
-##### Elasticsearch Architecture in this demo
+##### Elasticsearch Architecture
 Two Elasticsearch nodes (Master, data).
 ##### Diagram
 ![Pic](https://raw.githubusercontent.com/rusher81572/elasticsearch-scylla/master/diagram.png)
