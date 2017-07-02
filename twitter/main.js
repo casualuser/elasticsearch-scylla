@@ -43,14 +43,15 @@ function search_twitter() {
       },
       body: message
     }
-  database.populateData(event.created_at,event.user.screen_name,event.text,'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+  //  database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
     request(options, function(error, response, body) {
       if (error) {
         console.log(error);
       } else {
-}
+        database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+      }
     });
-    });
+  });
 
   stream.on('error', function(error) {
     console.log('\nAn error has occurred.\n' + error + '\n');
@@ -64,14 +65,14 @@ function search_twitter() {
 
 
 if (consumer_key && consumer_secret && access_token_key && fluent_server && twitter_topic) {
-      setTimeout(function() {
-      console.log('\nCreating keyspace.....');
-      database.createKeyspace();
-      setTimeout(function(){
+  setTimeout(function() {
+    console.log('\nCreating keyspace.....');
+    database.createKeyspace();
+    setTimeout(function() {
       console.log('\nLooking for ' + twitter_topic);
-      search_twitter(); 
-      }, 10000);
-     },60000);
+      search_twitter();
+    }, 10000);
+  }, 60000);
 } else {
   console.log('\n[Error: Missing arguments!]\n');
 }
