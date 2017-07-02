@@ -1,3 +1,0 @@
-#!/bin/bash
-curl -v -X POST -d 'json={"date":"1","username":"2","tweet":"3","url": "4"}' http://localhost:8888/scylladb
-curl -v -X POST -d 'json={"date":"1","username":"2","tweet":"3","url": "4"}' http://localhost:8888/test
