@@ -9,7 +9,7 @@ Three Scylla nodes in a multi-datacenter configuration.
 ### Elasticsearch Architecture in this demo
 Two Elasticsearch nodes (Master, data);
 
-![Pic](https://raw.githubusercontent.com/rusher81572/elasticsearch-scylla/master/diagram.png1)
+![Pic](https://raw.githubusercontent.com/rusher81572/elasticsearch-scylla/master/diagram.png)
 
 ### Prerequisites
 
