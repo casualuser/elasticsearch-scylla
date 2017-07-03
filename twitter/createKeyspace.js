@@ -31,13 +31,30 @@ var populateData = function(date, username, tweet, url) {
   });
 };
 
+var getData = function(callback) {
+  var client = new cassandra.Client({
+    contactPoints: [scylladb_server],
+    keyspace: 'fluentdloggers'
+  });
+
+  var query = 'select * from tweets;';
+
+  client.execute(query, function(err, result) {
+    if (err) {
+      callback('\n' + err);
+    } else {
+      callback(JSON.stringify(result));
+    }
+  });
+};
+
 function createTable() {
   var client = new cassandra.Client({
     contactPoints: [scylladb_server],
     keyspace: 'fluentdloggers'
   });
 
-  client.execute("CREATE TABLE tweets (Date text ,UserName text, Tweet text, URL text, PRIMARY KEY(Date, Username));", function(err, result) {
+  client.execute("CREATE TABLE tweets (Date text ,UserName text, Tweet text, URL text, id text,PRIMARY KEY(Date, Username));", function(err, result) {
     if (err) {
       console.log('\n' + err);
     }
@@ -45,3 +62,4 @@ function createTable() {
 }
 module.exports.populateData = populateData;
 module.exports.createKeyspace = createKeyspace;
+module.exports.getData = getData;

@@ -1,7 +1,7 @@
 # Mine data with Elasticsearch and ScyllaDB
 <p align=center>
 
-The purpose of this demo is to show how to feed data from Twitter into Elasticsearch and Scylla via Fluent for data analytics purposes. The Twitter app will search for a specific Twitter hashtag and feed data into Scylla and Elasticsearch at the same time for real time data analytics. Since the data will be permanently stored in Scylla, you can always transfer the data back into Elastic Search for future analysis. 
+The purpose of this demo is to show how to feed data from Twitter into Elasticsearch and Scylla via Fluent for data analytics purposes. The Twitter app will search for a specific Twitter hashtag and feed data into Scylla. To feed the data from Scylla to Elasticsearch, simply issue a curl command referenced in this README to begin the data dump.
 
 ### Architecture
 
@@ -54,6 +54,10 @@ d2bfecf52f4d        elasticsearchscylla_scylla-node1           "/bin/sh -c 'bash
 4f6321af2523        elasticsearchscylla_fluent                 "/bin/sh -c 'fluen..."   49 seconds ago      Up 47 seconds       0.0.0.0:8888->8888/tcp   elasticsearchscylla_fluent_1
 ```
 
+### Dumping the data from Scylla to Elasticsearch
+```
+curl http://127.0.0.1:8080/dump
+```
 
 ### Accessing Kibana to view the Twitter data
 1. Goto https://0.0.0.0:5601 in your web browser

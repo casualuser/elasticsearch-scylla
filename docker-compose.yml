@@ -12,7 +12,7 @@ services:
       - DC1=DC1
       - SEEDS=10.10.10.1,10.10.10.2,10.10.10.3
       - CQLSH_HOST=10.10.10.1
-
+      
   scylla-node2:
     build: ./scylla
     restart: always
@@ -84,6 +84,8 @@ services:
       - twitter_topic=trump
       - FLUENT_SERVER=http://fluent:8888
       - SCYLLADB_SERVER=scylla-node1
+    ports:
+      - 8080:8080
 
 networks:
   web:
