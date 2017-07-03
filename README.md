@@ -54,6 +54,12 @@ d2bfecf52f4d        elasticsearchscylla_scylla-node1           "/bin/sh -c 'bash
 4f6321af2523        elasticsearchscylla_fluent                 "/bin/sh -c 'fluen..."   49 seconds ago      Up 47 seconds       0.0.0.0:8888->8888/tcp   elasticsearchscylla_fluent_1
 ```
 
+### Checking the Twitter data from Scylla with cqlsh
+```
+docker exec -it elasticsearchscylla_scylla-node1_1 cqlsh
+cqlsh> use fluentdloggers;select * from tweets;
+```
+
 ### Dumping the data from Scylla to Elasticsearch
 ```
 curl http://127.0.0.1:8080/dump
@@ -66,11 +72,6 @@ curl http://127.0.0.1:8080/dump
 
 The default index of "logstash" will show you the Twitter data.
 
-### Checking the Twitter data from Scylla with cqlsh
-```
-docker exec -it elasticsearchscylla_scylla-node1_1 cqlsh
-cqlsh> use fluentdloggers;select * from tweets;
-```
 
 ### Stopping and Erasing the demo
 
