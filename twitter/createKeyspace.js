@@ -54,7 +54,7 @@ function createTable() {
     keyspace: 'fluentdloggers'
   });
 
-  client.execute("CREATE TABLE tweets (Date text ,UserName text, Tweet text, URL text, id text,PRIMARY KEY(Date, Username));", function(err, result) {
+  client.execute("CREATE TABLE tweets (Date text ,UserName text, Tweet text, URL text,PRIMARY KEY(Date, Username));", function(err, result) {
     if (err) {
       console.log('\n' + err);
     }

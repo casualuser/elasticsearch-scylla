@@ -57,16 +57,18 @@ app.get('/start', function(req, res) {
 
 app.get('/dump', function(req, res) {
   var get_scylla_data = database.getData(function(received_data) {
-    console.log(data);
     var data = JSON.parse(received_data);
+
     for (var key in data.rows) {
       if (data.rows.hasOwnProperty(key)) {
+
         var message = JSON.stringify({
           'date': data.rows[key].date,
           'username': data.rows[key].username,
           'tweet': data.rows[key].tweet,
           'url': data.rows[key].url
         });
+
         var options = {
           url: fluent_server + '/scylladb',
           method: 'POST',
@@ -78,9 +80,7 @@ app.get('/dump', function(req, res) {
         }
         request(options, function(error, response, body) {
           if (error) {
-            console.log(error);
-          } else {
-
+            console.log('\n' + error);
           }
         });
       };
@@ -88,7 +88,6 @@ app.get('/dump', function(req, res) {
     res.end('\nFinished Data Dump.');
   });
 });
-
 
 
 server.listen('8080', function() {
