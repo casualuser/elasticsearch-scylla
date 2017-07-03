@@ -1,6 +1,6 @@
 var Twitter = require('twitter');
 var request = require('request');
-var createKeyspace = require('./createKeyspace');
+var elasticsearch = require('./elasticsearch');
 var database = require('./createKeyspace');
 var express = require('express');
 var app = express();
@@ -13,7 +13,7 @@ var access_token_secret = process.env.access_token_secret;
 var twitter_topic = process.env.twitter_topic;
 var write_to_scylla = '1';
 //elasticsearch server info
-var fluent_server = process.env.FLUENT_SERVER;
+var elasticsearch_url = process.env.elasticsearch_url;
 
 var client = new Twitter({
   "consumer_key": consumer_key,
@@ -61,28 +61,7 @@ app.get('/dump', function(req, res) {
 
     for (var key in data.rows) {
       if (data.rows.hasOwnProperty(key)) {
-
-        var message = JSON.stringify({
-          'date': data.rows[key].date,
-          'username': data.rows[key].username,
-          'tweet': data.rows[key].tweet,
-          'url': data.rows[key].url
-        });
-
-        var options = {
-          url: fluent_server + '/scylladb',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': message.length
-          },
-          body: message
-        }
-        request(options, function(error, response, body) {
-          if (error) {
-            console.log('\n' + error);
-          }
-        });
+        elasticsearch.sendData(data.rows[key].date, data.rows[key].username, data.rows[key].tweet, data.rows[key].url);
       };
     };
     res.end('\nFinished Data Dump.');
@@ -94,10 +73,12 @@ server.listen('8080', function() {
   console.log('Listening on port %d', 8080);
 });
 
-if (consumer_key && consumer_secret && access_token_key && fluent_server && twitter_topic) {
+if (consumer_key && consumer_secret && access_token_key && elasticsearch_url && twitter_topic) {
   setTimeout(function() {
     console.log('\nCreating keyspace.....');
     database.createKeyspace();
+    elasticsearch.clear_data();
+    elasticsearch.create_mapping();
     setTimeout(function() {
       console.log('\nLooking for ' + twitter_topic);
       search_twitter();
