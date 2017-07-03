@@ -1,7 +1,7 @@
 # Mine data with Elasticsearch and ScyllaDB
 <p align=center>
 
-The purpose of this demo is to show how to feed data from Twitter into Elasticsearch and Scylla via Fluent for data analytics purposes. The Twitter app will search for a specific Twitter hashtag and feed data into Scylla. To feed the data from Scylla to Elasticsearch, simply issue a curl command referenced in this README to begin the data dump.
+The purpose of this demo is to show how to feed data from Twitter into Elasticsearch and Scylla for data analytics purposes. The Twitter app will search for a specific Twitter hashtag and feed data into Scylla. To feed the data from Scylla to Elasticsearch, simply issue a curl command referenced in this README to begin the data dump.
 
 ### Architecture
 
@@ -51,7 +51,6 @@ a4a18e3ba26f        elasticsearchscylla_scylla-node3           "/bin/sh -c 'bash
 b5b04ac809b8        elasticsearchscylla_elasticsearch-master   "/bin/sh -c 'bash ..."   49 seconds ago      Up 45 seconds       0.0.0.0:9200->9200/tcp   elasticsearchscylla_elasticsearch-master_1
 f4e03f46a8ea        elasticsearchscylla_scylla-node2           "/bin/sh -c 'bash ..."   49 seconds ago      Up 47 seconds                                elasticsearchscylla_scylla-node2_1
 d2bfecf52f4d        elasticsearchscylla_scylla-node1           "/bin/sh -c 'bash ..."   49 seconds ago      Up 46 seconds                                elasticsearchscylla_scylla-node1_1
-4f6321af2523        elasticsearchscylla_fluent                 "/bin/sh -c 'fluen..."   49 seconds ago      Up 47 seconds       0.0.0.0:8888->8888/tcp   elasticsearchscylla_fluent_1
 ```
 
 ### Checking the Twitter data from Scylla with cqlsh
