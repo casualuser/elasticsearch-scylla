@@ -11,7 +11,7 @@ var consumer_secret = process.env.consumer_secret;
 var access_token_key = process.env.access_token_key;
 var access_token_secret = process.env.access_token_secret;
 var twitter_topic = process.env.twitter_topic;
-
+var write_to_scylla = '1';
 //elasticsearch server info
 var fluent_server = process.env.FLUENT_SERVER;
 
@@ -29,7 +29,9 @@ function search_twitter() {
   });
   stream.on('data', function(event) {
     if (event.created_at && event.user.screen_name && event.text && event.id_str) {
-      database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+      if (write_to_scylla) {
+        database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+      }
     }
   });
 
@@ -42,6 +44,16 @@ function search_twitter() {
     search_twitter();
   });
 }
+
+app.get('/stop', function(req, res) {
+  write_to_scylla = '';
+  res.end('\nStopping writes to Scylla');
+});
+
+app.get('/start', function(req, res) {
+  write_to_scylla = '1';
+  res.end('\nAllowing writes to Scylla');
+});
 
 app.get('/dump', function(req, res) {
   var get_scylla_data = database.getData(function(received_data) {
@@ -67,11 +79,13 @@ app.get('/dump', function(req, res) {
         request(options, function(error, response, body) {
           if (error) {
             console.log(error);
-          } else {}
+          } else {
+
+          }
         });
-        console.log('\nFinished Data Dump.');
       };
     };
+    res.end('\nFinished Data Dump.');
   });
 });
 

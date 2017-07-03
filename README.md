@@ -65,6 +65,16 @@ cqlsh> use fluentdloggers;select * from tweets;
 curl http://127.0.0.1:8080/dump
 ```
 
+### To stop the tweets from writing to Scylla
+```
+curl http://127.0.0.1:8080/stop
+```
+
+### To start writing the tweets to Scylla again
+```
+curl http://127.0.0.1:8080/start
+```
+
 ### Accessing Kibana to view the Twitter data
 1. Goto https://0.0.0.0:5601 in your web browser
 2. Click the create button
