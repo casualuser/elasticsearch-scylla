@@ -56,6 +56,7 @@ app.get('/start', function(req, res) {
 });
 
 app.get('/dump', function(req, res) {
+  elasticsearch.clear_data();
   var get_scylla_data = database.getData(function(received_data) {
     var data = JSON.parse(received_data);
 
@@ -77,7 +78,6 @@ if (consumer_key && consumer_secret && access_token_key && elasticsearch_url && 
   setTimeout(function() {
     console.log('\nCreating keyspace.....');
     database.createKeyspace();
-    elasticsearch.clear_data();
     elasticsearch.create_mapping();
     setTimeout(function() {
       console.log('\nLooking for ' + twitter_topic);
