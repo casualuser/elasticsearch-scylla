@@ -12,7 +12,7 @@ services:
       - DC1=DC1
       - SEEDS=10.10.10.1,10.10.10.2,10.10.10.3
       - CQLSH_HOST=10.10.10.1
-      
+
   scylla-node2:
     build: ./scylla
     restart: always
@@ -42,6 +42,7 @@ services:
       - web
     ports:
       - 8888:8888
+      
   elasticsearch-master:
     build: ./elasticsearch
     restart: always
