@@ -1,7 +1,7 @@
 # Mine data with Elasticsearch and ScyllaDB
 <p align=center>
 
-The purpose of this demo is to show how to feed data into Elasticsearch and Scylla from Twitter via Fluent. The Twitter app will search for a specific Twitter hashtag and send data to Scylla directly and to Elasticsearch via Fluent. This demo will run Fluentd, Elastisearch, Kibana, and the Scylla.
+The purpose of this demo is to show how to feed data from Twitter into Elasticsearch and Scylla via Fluent for data analytics purposes. The Twitter app will search for a specific Twitter hashtag and feed data into Scylla and Elasticsearch at the same time for real time data analytics. Since the data will be permanently stored in Scylla, you can always transfer the data back to Elastic Search for future analysis. 
 
 ### Architecture
 
