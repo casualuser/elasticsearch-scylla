@@ -35,14 +35,6 @@ services:
       - SEEDS=10.10.10.1,10.10.10.2,10.10.10.3
       - CQLSH_HOST=10.10.10.3
 
-  fluent:
-    build: ./fluent
-    restart: always
-    networks:
-      - web
-    ports:
-      - 8888:8888
-      
   elasticsearch-master:
     build: ./elasticsearch
     restart: always
@@ -83,7 +75,7 @@ services:
       - access_token_key=foo
       - access_token_secret=foo
       - twitter_topic=trump
-      - FLUENT_SERVER=http://fluent:8888
+      - elasticsearch_url=http://elasticsearch-master:9200
       - SCYLLADB_SERVER=scylla-node1
     ports:
       - 8080:8080
