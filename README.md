@@ -56,7 +56,7 @@ d2bfecf52f4d        elasticsearchscylla_scylla-node1           "/bin/sh -c 'bash
 ### Checking the Twitter data from Scylla with cqlsh
 ```
 docker exec -it elasticsearchscylla_scylla-node1_1 cqlsh
-cqlsh> use fluentdloggers;select * from tweets;
+cqlsh> select * from twitter.tweets;
 ```
 
 ### Dumping the data from Scylla to Elasticsearch
