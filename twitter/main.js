@@ -4,6 +4,7 @@ var elasticsearch = require('./elasticsearch');
 var database = require('./createKeyspace');
 var express = require('express');
 var app = express();
+var sleep = require('system-sleep')
 var server = require("http").createServer(app);
 //Twitter Account Variables
 var consumer_key = process.env.consumer_key;
@@ -12,8 +13,10 @@ var access_token_key = process.env.access_token_key;
 var access_token_secret = process.env.access_token_secret;
 var twitter_topic = process.env.twitter_topic;
 var write_to_scylla = '1';
+
 //elasticsearch server info
 var elasticsearch_url = process.env.elasticsearch_url;
+var hard_limit = '2000';
 
 var client = new Twitter({
   "consumer_key": consumer_key,
@@ -27,9 +30,10 @@ function search_twitter() {
   var stream = client.stream('statuses/filter', {
     track: twitter_topic
   });
+
   stream.on('data', function(event) {
     if (event.created_at && event.user.screen_name && event.text && event.id_str) {
-      if (write_to_scylla) {
+      if (write_to_scylla && i <= hard_limit) {
         database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
       }
     }
@@ -55,32 +59,37 @@ app.get('/start', function(req, res) {
   res.end('\nAllowing writes to Scylla');
 });
 
-app.get('/dump', function(req, res) {
-  elasticsearch.clear_data();
+function dump_data() {
   var get_scylla_data = database.getData(function(received_data) {
     var data = JSON.parse(received_data);
-
     for (var key in data.rows) {
       if (data.rows.hasOwnProperty(key)) {
         elasticsearch.sendData(data.rows[key].date, data.rows[key].username, data.rows[key].tweet, data.rows[key].url);
+        sleep(.2 * 1000);
       };
     };
-    res.end('\nFinished Data Dump.');
+    console.log('\nData dump complete');
   });
-});
+}
 
+app.get('/dump', function(req, res) {
+  elasticsearch.clear_data();
+  setTimeout(function() {
+    dump_data();
+  }, 3000);
+  res.end('\nSent request to dump data to elasticseaerch');
+});
 
 server.listen('8080', function() {
   console.log('Listening on port %d', 8080);
 });
 
 if (consumer_key && consumer_secret && access_token_key && elasticsearch_url && twitter_topic) {
-  setTimeout(function() {
-    console.log('\nCreating keyspace.....');
+  setTimeout(function() { //  console.log('\nCreating keyspace.....');
     database.createKeyspace();
     elasticsearch.create_mapping();
     setTimeout(function() {
-      console.log('\nLooking for ' + twitter_topic);
+      console.log('\nLooking for: ' + twitter_topic);
       search_twitter();
     }, 10000);
   }, 60000);

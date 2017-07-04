@@ -8,6 +8,7 @@
     "fs": "",
     "express": "",
     "request": "",
+    "system-sleep": "",
     "twitter": "^1.7.1"
   }
 }

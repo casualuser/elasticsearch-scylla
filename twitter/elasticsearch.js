@@ -3,7 +3,6 @@ var fs = require('fs');
 var source = process.env.source;
 //elasticsearch server info
 var elasticsearch_url = process.env.elasticsearch_url;
-
 var clear_data = function() {
   var message = {
     "query": {
@@ -78,34 +77,32 @@ var create_mapping = function() {
     request(options, function(error, response, body) {
       console.log('\nCreating Map......')
       if (error) {
-        console.log('\n' + error + '\n\n');
-      } else {
-        console.log('\n' + body);
-
+        console.log('\n' + error + '\n');
       }
     });
-  }, 5000);
+  }, 1000);
 }
 
 var sendData = function(date, username, tweet, url) {
+    var options = {
+      url: elasticsearch_url + '/logstash/logstash',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'date': date,
+        'username': username,
+        'tweet': tweet,
+        'url': url
+      })
+    }
 
-  var options = {
-    url: elasticsearch_url + '/logstash/logstash',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'date': date,
-      'username': username,
-      'tweet': tweet,
-      'url': url
-    })
-  }
-
-  request(options, function(error, response, body) {
-
-  });
+    request(options, function(error, response, body) {
+      if (error) {
+        console.log('\n' + error);
+      }
+    });
 }
 
 module.exports.clear_data = clear_data;

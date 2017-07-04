@@ -19,6 +19,9 @@ Two Elasticsearch nodes (Master, data).
 3. 3GB of RAM or greater for Docker
 4. (Optional) [Twitter API credentials](https://dev.twitter.com/)
 
+### Important Notes
+To address stability concerns with running this in Docker on a laptop, there is a hard limit in main.js (var hard_limit) of storing only 2000 entries in Scylla and Elasticsearch. If you are running this on real hardware, this can be adjusted to a much higher number.
+
 ### Building the images
 ```
 unzip elasticsearch-scylla-master.zip
