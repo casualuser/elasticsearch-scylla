@@ -6,7 +6,7 @@ var createKeyspace = function() {
   var client = new cassandra.Client({
     contactPoints: [scylladb_server]
   });
-  client.execute("CREATE KEYSPACE fluentdloggers WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy','DC1' : 2, 'DC2': 1 };", function(err, result) {
+  client.execute("CREATE KEYSPACE twitter WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy','DC1' : 2, 'DC2': 1 };", function(err, result) {
     if (err) {
       console.log('\n' + err);
     }
@@ -17,7 +17,7 @@ var createKeyspace = function() {
 var populateData = function(date, username, tweet, url) {
   var client = new cassandra.Client({
     contactPoints: [scylladb_server],
-    keyspace: 'fluentdloggers'
+    keyspace: 'twitter'
   });
 
   var query = 'INSERT INTO tweets (date,username,tweet, url) VALUES (?, ?, ?, ?)';
@@ -34,7 +34,7 @@ var populateData = function(date, username, tweet, url) {
 var getData = function(callback) {
   var client = new cassandra.Client({
     contactPoints: [scylladb_server],
-    keyspace: 'fluentdloggers'
+    keyspace: 'twitter'
   });
 
   var query = 'select * from tweets;';
@@ -51,7 +51,7 @@ var getData = function(callback) {
 function createTable() {
   var client = new cassandra.Client({
     contactPoints: [scylladb_server],
-    keyspace: 'fluentdloggers'
+    keyspace: 'twitter'
   });
 
   client.execute("CREATE TABLE tweets (Date text ,UserName text, Tweet text, URL text,PRIMARY KEY(Date, Username));", function(err, result) {
