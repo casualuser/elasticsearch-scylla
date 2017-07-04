@@ -5,4 +5,4 @@ RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 ADD * /twitter/
 WORKDIR /twitter
-CMD npm install;node main.js
+CMD npm install;node --max_old_space_size=2000 main.js
