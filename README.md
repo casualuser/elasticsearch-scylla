@@ -79,9 +79,6 @@ curl http://127.0.0.1:8080/start
 2. Enter logstash for the index name and then click the create button
 3. Start analyzing data
 
-The default index of "logstash" will show you the Twitter data.
-
-
 ### Stopping and Erasing the demo
 
 The following commands will stop and delete all running containers.
