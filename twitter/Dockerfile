@@ -5,5 +5,4 @@ RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 ADD * /twitter/
 WORKDIR /twitter
-RUN ln -s /usr/bin/nodejs /usr/bin/node
-CMD npm install;nodejs main.js
+CMD npm install;node main.js
