@@ -16,7 +16,6 @@ var write_to_scylla = '1';
 
 //elasticsearch server info
 var elasticsearch_url = process.env.elasticsearch_url;
-var hard_limit = '2000';
 
 var client = new Twitter({
   "consumer_key": consumer_key,
@@ -33,7 +32,7 @@ function search_twitter() {
 
   stream.on('data', function(event) {
     if (event.created_at && event.user.screen_name && event.text && event.id_str) {
-      if (write_to_scylla && i <= hard_limit) {
+      if (write_to_scylla) {
         database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
       }
     }
@@ -51,11 +50,13 @@ function search_twitter() {
 
 app.get('/stop', function(req, res) {
   write_to_scylla = '';
+  console.log('\nStopping writes to Scylla');
   res.end('\nStopping writes to Scylla');
 });
 
 app.get('/start', function(req, res) {
   write_to_scylla = '1';
+  console.log('\nAllowing writes to Scylla');
   res.end('\nAllowing writes to Scylla');
 });
 
@@ -65,7 +66,7 @@ function dump_data() {
     for (var key in data.rows) {
       if (data.rows.hasOwnProperty(key)) {
         elasticsearch.sendData(data.rows[key].date, data.rows[key].username, data.rows[key].tweet, data.rows[key].url);
-        sleep(.2 * 1000);
+        sleep(.1 * 1000);
       };
     };
     console.log('\nData dump complete');
@@ -85,7 +86,8 @@ server.listen('8080', function() {
 });
 
 if (consumer_key && consumer_secret && access_token_key && elasticsearch_url && twitter_topic) {
-  setTimeout(function() { //  console.log('\nCreating keyspace.....');
+  setTimeout(function() {
+    console.log('\nCreating keyspace.....');
     database.createKeyspace();
     elasticsearch.create_mapping();
     setTimeout(function() {
