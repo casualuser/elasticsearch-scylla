@@ -1,5 +1,5 @@
 {
-  "name": "elasticsearchdemo-flightdata",
+  "name": "elasticsearchdemo-scylla",
   "version": "0.0.1",
   "dependencies": {
     "async": "",
