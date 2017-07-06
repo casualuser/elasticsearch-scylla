@@ -34,6 +34,7 @@ function search_twitter() {
     if (event.created_at && event.user.screen_name && event.text && event.id_str) {
       if (write_to_scylla) {
         database.populateData(event.created_at, event.user.screen_name, event.text, 'https://twitter.com/' + event.user.screen_name + '/status/' + event.id_str);
+        sleep(.1 * 1000);
       }
     }
   });
